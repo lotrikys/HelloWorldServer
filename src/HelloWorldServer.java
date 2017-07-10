@@ -72,7 +72,6 @@ public class HelloWorldServer {
             DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
 //            clientSentence = inFromClient.readLine();
 //            System.out.println("Received: " + clientSentence);
-//            capitalizedSentence = clientSentence.toUpperCase();
             outToClient.writeBytes(gsonList.toString());
             outToClient.flush();
             socket.close();
