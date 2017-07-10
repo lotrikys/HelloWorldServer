@@ -15,23 +15,21 @@ import java.util.List;
 public class HelloWorldServer {
 
     static String clientSentence;
-    static String capitalizedSentence;
     static String myDriver = "com.mysql.jdbc.Driver";
     static String myUrl = "jdbc:mysql://10.8.0.1:3306/kulinar_pp_ua_dr";
     static String query = "select `nid`,`title`,`body_value` from `node` inner join `field_data_body` on " +
             "(`node`.`nid` = `field_data_body`.`entity_id`) where `node`.`uid`=17;";
-    static List<ResponseModel> responseModelList = new ArrayList<>();
+
     static ResponseModel responseModel = new ResponseModel();
 
     public static void main(String[] args) throws Exception{
 
         Class.forName(myDriver);
-        Connection conn = DriverManager.getConnection(myUrl, "kulinar_dr", "yander");
+        Connection conn = DriverManager.getConnection(myUrl, "kulinar_dr", "");
         Statement st = conn.createStatement();
 
         ResultSet rs = st.executeQuery(query);
 
-        List<Integer> nids = new ArrayList<>();
         List<String> gsonList = new ArrayList<>();
         Gson gson = new Gson();
 
@@ -41,10 +39,7 @@ public class HelloWorldServer {
             responseModel.setTitle(rs.getString("title"));
             responseModel.setBody_value(rs.getString("body_value"));
             gsonList.add(gson.toJson(responseModel));
-            responseModelList.add(responseModel);
         }
-
-        Collections.shuffle(responseModelList);
 
         System.out.println(gsonList);
 
